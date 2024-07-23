@@ -18,6 +18,6 @@ for players in team1:
 
 
 print("Team 2 : ")
-print("Caption : " + cap2)
+print("Caption  : " + cap2)
 for players in team2:
     print(players)
