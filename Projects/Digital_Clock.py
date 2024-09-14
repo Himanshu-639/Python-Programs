@@ -9,9 +9,18 @@ root.configure(bg = "light yellow")
 root.minsize(400, 200)
 root.geometry("400x200")
 
-time_frame = tk.Frame(root, bg="light yellow")
-date_frame = tk.Frame(root, bg="light yellow")
-timezone_frame = tk.Frame(root, bg="light yellow")
+notebook = ttk.Notebook(root)
+notebook.pack(expand=True, fill="both")
+
+clock_tab = tk.Frame(notebook, bg="light yellow")
+notebook.add(clock_tab, text="Digital Clock")
+
+stopwatch_tab = tk.Frame(notebook, bg="light blue")
+notebook.add(stopwatch_tab, text="Stopwatch")
+
+time_frame = tk.Frame(clock_tab, bg="light yellow")
+date_frame = tk.Frame(clock_tab, bg="light yellow")
+timezone_frame = tk.Frame(clock_tab, bg="light yellow")
 
 label0 = tk.Label(time_frame, bg="light yellow", font=("Fixedsys", 60))
 label1 = tk.Label(date_frame, bg="light yellow", font=("Fixedsys", 30))
@@ -36,10 +45,10 @@ selected_timezone = tk.StringVar(root)
 timezone_label = tk.Label(timezone_frame, text="Timezone : ", bg="light yellow", font=("Helvetica", 12))
 timezone_menu = ttk.Combobox(timezone_frame, textvariable = selected_timezone)
 
-root.grid_rowconfigure(0, weight=1)
-root.grid_rowconfigure(1, weight=1)
-root.grid_rowconfigure(2, weight=1)
-root.grid_columnconfigure(0, weight=1)
+clock_tab.grid_rowconfigure(0, weight=1)
+clock_tab.grid_rowconfigure(1, weight=1)
+clock_tab.grid_rowconfigure(2, weight=1)
+clock_tab.grid_columnconfigure(0, weight=1)
 
 for frame in [time_frame, date_frame, timezone_frame]:
     frame.grid_columnconfigure(0, weight=1)
