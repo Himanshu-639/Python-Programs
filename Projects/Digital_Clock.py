@@ -21,6 +21,10 @@ notebook.add(clock_tab, text="Digital Clock")
 stopwatch_tab = tk.Frame(notebook, bg="light blue")
 notebook.add(stopwatch_tab, text="Stopwatch")
 
+
+
+# -------------- CLOCK TAB --------------- #
+
 #Clock tab Layout with 3 frames
 time_frame = tk.Frame(clock_tab, bg="light yellow")
 date_frame = tk.Frame(clock_tab, bg="light yellow")
@@ -79,9 +83,72 @@ timezone_frame.grid_columnconfigure(1, weight=1)
 label0.grid(row=0, column=0, sticky="nsew")
 label1.grid(row=0, column=0, sticky="nsew")
 
-#Calling Functions
+#Calling Functions of Clock Tab
 update_timezone_options()
 update_time()
 update_date()
+
+
+
+# -------------- STOPWATCH TAB -------------- #
+
+#Stopwatch Tab Layout
+stopwatch_tab.grid_rowconfigure(0, weight=1)
+stopwatch_tab.grid_columnconfigure(0, weight=1)
+
+#Stopwatch Frame to contain label and buttons
+stopwatch_frame = tk.Frame(stopwatch_tab, bg="light blue",)
+stopwatch_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+
+stopwatch_label = tk.Label(stopwatch_frame, bg="light blue", font=("Fixedsys", 60), text="00:00:00")
+stopwatch_label.grid(row=0, column=0, columnspan=3, padx=5, pady=5)
+
+#Defining Clock Functionality
+running=False
+elapsed_time = 0
+
+def start_stopwatch():
+    global running
+    if not running:
+        running = True
+        update_stopwatch()
+
+def update_stopwatch():
+    global elapsed_time
+    if running:
+        elapsed_time+=1
+        formatted_time = f"{elapsed_time//3600:02}:{(elapsed_time//60)%60:02}:{elapsed_time%60:02}"
+        stopwatch_label.config(text=formatted_time)
+        stopwatch_tab.after(1000, update_stopwatch)
+
+def pause_stopwatch():
+    global running
+    if running:
+        running = False
+
+def reset_stopwatch():
+    global running, elapsed_time
+    running = False
+    elapsed_time = 0
+    stopwatch_label.config(text="00:00:00")
+
+#Adding Buttons
+button_width = 15
+
+start_button = tk.Button(stopwatch_frame, text="Start/Resume", command=start_stopwatch, width=button_width)
+start_button.grid(row=1, column=0, padx=5, pady=20, sticky="e")
+
+pause_button = tk.Button(stopwatch_frame, text = "Pause", command=pause_stopwatch, width=button_width)
+pause_button.grid(row=1, column=1, padx=5, pady=20)
+
+reset_button = tk.Button(stopwatch_frame, text="Reset", command=reset_stopwatch, width=button_width)
+reset_button.grid(row=1, column=2, padx=5, pady=20, sticky="w")
+
+#Center everything within the stopwatch frame
+stopwatch_frame.grid_rowconfigure(0, weight=1)
+#stopwatch_frame.grid_rowconfigure(1, weight=1)
+stopwatch_frame.grid_columnconfigure(0, weight=1)
+stopwatch_frame.grid_columnconfigure(1, weight=1)
+stopwatch_frame.grid_columnconfigure(2, weight=1)
 
 root.mainloop()
