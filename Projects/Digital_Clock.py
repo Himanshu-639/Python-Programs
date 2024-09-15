@@ -13,12 +13,25 @@ root.geometry("400x200")
 notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill="both")
 
+#Creating a style object for notebook tabs
+style = ttk.Style()
+
+#Important for enabling theme settings
+style.theme_use('default')
+
+#Styling the Notebook tab bar
+style.configure('TNotebook.Tab', background = "#3a3a3a", foreground = "light gray", font = ('Comic Sans MS', 12, 'bold'), padding = [10, 3])
+style.map('TNotebook.Tab', 
+        background = [('selected', '#00aaff')],
+        foreground = [('selected', 'white')])
+style.configure('TNotebook', background='#cccccc')
+
 #Creating the clock tab frame
 clock_tab = tk.Frame(notebook, bg="light yellow")
 notebook.add(clock_tab, text="Digital Clock")
 
 #Creating the stopwatch tab frame
-stopwatch_tab = tk.Frame(notebook, bg="light blue")
+stopwatch_tab = tk.Frame(notebook, bg="#d3f6f3")
 notebook.add(stopwatch_tab, text="Stopwatch")
 
 
@@ -55,7 +68,7 @@ def update_timezone_options(*args):
 
 #Timezone label and dropdown
 selected_timezone = tk.StringVar(root)
-timezone_label = tk.Label(timezone_frame, text="Timezone : ", bg="light yellow", font=("Helvetica", 12))
+timezone_label = tk.Label(timezone_frame, text="Timezone : ", bg="light yellow", font=("Comic Sans MS", 12))
 timezone_menu = ttk.Combobox(timezone_frame, textvariable = selected_timezone)
 
 #Arranging frames inside the clock tab
@@ -97,10 +110,10 @@ stopwatch_tab.grid_rowconfigure(0, weight=1)
 stopwatch_tab.grid_columnconfigure(0, weight=1)
 
 #Stopwatch Frame to contain label and buttons
-stopwatch_frame = tk.Frame(stopwatch_tab, bg="light blue",)
+stopwatch_frame = tk.Frame(stopwatch_tab, bg="#d3f6f3",)
 stopwatch_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-stopwatch_label = tk.Label(stopwatch_frame, bg="light blue", font=("Fixedsys", 60), text="00:00:00")
+stopwatch_label = tk.Label(stopwatch_frame, bg="#d3f6f3", font=("Fixedsys", 60), text="00:00:00")
 stopwatch_label.grid(row=0, column=0, columnspan=3, padx=5, pady=5)
 
 #Defining Clock Functionality
@@ -132,16 +145,29 @@ def reset_stopwatch():
     elapsed_time = 0
     stopwatch_label.config(text="00:00:00")
 
+#Creating a Style Object
+style = ttk.Style()
+style.configure('TButton',
+                font=('Comic Sans MS', 12, 'bold'),
+                padding=10,
+                relief='flat',
+                foreground='white')
+style.map('TButton',
+          background=[('active', '#0056b3')])
+
 #Adding Buttons
 button_width = 15
 
-start_button = tk.Button(stopwatch_frame, text="Start/Resume", command=start_stopwatch, width=button_width)
+start_button = tk.Button(stopwatch_frame, text="Start/Resume", command=start_stopwatch, width=button_width, font = ('Comic Sans MS', 14, 'bold'),
+                         bg='#007BFF', fg='white', relief='flat', bd=0)
 start_button.grid(row=1, column=0, padx=5, pady=20, sticky="e")
 
-pause_button = tk.Button(stopwatch_frame, text = "Pause", command=pause_stopwatch, width=button_width)
+pause_button = tk.Button(stopwatch_frame, text = "Pause", command=pause_stopwatch, width=button_width, font = ('Comic Sans MS', 14, 'bold'),
+                         bg='#007BFF', fg='white', relief='flat', bd=0)
 pause_button.grid(row=1, column=1, padx=5, pady=20)
 
-reset_button = tk.Button(stopwatch_frame, text="Reset", command=reset_stopwatch, width=button_width)
+reset_button = tk.Button(stopwatch_frame, text="Reset", command=reset_stopwatch, width=button_width, font = ('Comic Sans MS', 14, 'bold'),
+                         bg='#007BFF', fg='white', relief='flat', bd=0)
 reset_button.grid(row=1, column=2, padx=5, pady=20, sticky="w")
 
 #Center everything within the stopwatch frame
